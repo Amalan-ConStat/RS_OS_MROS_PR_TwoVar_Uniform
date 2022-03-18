@@ -1,10 +1,10 @@
 
-# RM_AM_MF_PR_TwoVar_Uniform
+# RS_OS_MROS_PR_TwoVar_Uniform
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-### Real Model vs Assumed Model vs Model Free method for the Poisson Regression with two variables where the covariate data is simulated from the Uniform distribution.
+### Random Sampling vs Optimal Sub-sampling vs Model Robust Optimal Sub-sampling method for the Poisson Regression with two variables where the covariate data is simulated from the Uniform distribution.
 
 A new model free method is compared with the existing OSMAC method under the circumstances where the initial sample size is same or otherwise for each simulation. 
 
