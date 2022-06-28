@@ -1,7 +1,7 @@
 ---
 title: "Check_Data"
 author: "Amalan"
-date: "21/10/2021"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
 output: html_document
 ---
 
