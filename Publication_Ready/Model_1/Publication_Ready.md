@@ -1,12 +1,23 @@
-Publication Ready
-================
-Amalan
-January 17, 2022
+---
+title: "Publication Ready"
+author: "Amalan"
+date: 'September 28, 2022'
+output: github_document
+---
 
-# Using Uniform Distribution for Data
 
-## Model : Model\_1
 
-![plot of chunk Identical r0 Plots](Plots/Identical%20r0%20Plots-1.png)
+# Using Normal Distribution for Data
 
-![plot of chunk All Plots](Plots/All%20Plots-1.png)
+## Model : Model_1 
+
+
+
+
+
+
+![plot of chunk Identical r0 Plots](Plots/Identical r0 Plots-1.png)![plot of chunk Identical r0 Plots](Plots/Identical r0 Plots-2.png)
+
+
+
+![plot of chunk All Plots](Plots/All Plots-1.png)![plot of chunk All Plots](Plots/All Plots-2.png)

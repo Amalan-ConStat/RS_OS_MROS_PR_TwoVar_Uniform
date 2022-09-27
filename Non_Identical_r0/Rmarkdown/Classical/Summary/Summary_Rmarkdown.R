@@ -13,6 +13,6 @@ for (i in 1:length(Model))
          fig_dir = c("Plots"),
          params=list("Model_Path"=Model[i]),
          verbose = TRUE,keep_md = FALSE)
-  open_output_dir()
+  #open_output_dir()
 }
 

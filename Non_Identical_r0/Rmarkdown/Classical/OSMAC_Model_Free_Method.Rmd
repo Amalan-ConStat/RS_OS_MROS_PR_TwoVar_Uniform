@@ -779,10 +779,28 @@ Full_EMSE_AM_1<-Full_Variance_AM_1+Full_Bias_AM_1*Full_Bias_AM_1
 Full_EMSE_AM_2<-Full_Variance_AM_2+Full_Bias_AM_2*Full_Bias_AM_2
 Full_EMSE_AM_3<-Full_Variance_AM_3+Full_Bias_AM_3*Full_Bias_AM_3
 
-remove(Temp_P,Temp_W,Temp_Info)
+Full_Data<-as.matrix(Simulated_Data$All_Data$Real_Model)
+Parameter_Data<-as.matrix(Est_Parameter_RM[,-c(1:2)])
+Parameter<-Parameter_Data[1,]
+
+Predict_Poisson_Regression<-function(Parameter)
+{
+  Estimates<-matrix(Parameter)
+  fitted_lambda<-exp(Full_Data[,-1]%*%Estimates)
+  return((mean(fitted_lambda - Full_Data[,1]))^2)
+}
+
+Accuracy<-apply(Parameter_Data,1,Predict_Poisson_Regression)
+
+Accuracy_Data<-cbind.data.frame(Est_Parameter_RM[,1:2],Accuracy)
+Accuracy_Data<-Accuracy_Data %>% 
+  group_by(Type,Subsample_Size) %>%
+  summarize(Average_Accuracy=mean(Accuracy))
+
+remove(Temp_P,Temp_W,Temp_Info,Full_Data,Parameter_Data,Parameter,Accuracy)
 
 # Store the Results
-save(All_MSE,All_EMSE,All_Bias,All_VAR,All_Info,
+save(All_MSE,All_EMSE,All_Bias,All_VAR,All_Info,Accuracy_Data,
      file = here("Non_Identical_r0","Summary","Classical",params$Model_Path,"Data","Efficiency",
                  "No_Correlated_Covariate_OSMAC_MF.RData"))
 
@@ -833,7 +851,23 @@ ggplot(.,aes(x=Subsample_Size,y=Efficiency,color=Model))+geom_point()+
   theme_light()+xlab("Sub sample size")+
   ylab("Relative Efficiency")+ggtitle("EMSE Efficiency")->Plot_list[[5]]
 
-ggarrange(plotlist = Plot_list,nrow = 1,ncol = 5,common.legend = TRUE)
+FullDataPath<-here("Non_Identical_r0","Generate_Big_Data",params$Model_Path,"No_Correlated_Covariate.RData")
+load(here(FullDataPath))
+
+Full_model<-glm(Y~.-1,data = as.data.frame(Simulated_Data[[2]]$Real_Model),family = poisson)
+Full_Data<-as.matrix(Simulated_Data$All_Data$Real_Model)
+
+fitted_lambda<-as.vector(predict.glm(Full_model,newdata = as.data.frame(Simulated_Data$All_Data$Real_Model[,-1])))
+Full_Accuracy<-(mean(fitted_lambda - Simulated_Data$All_Data$Real_Model[,1]))^2
+
+Accuracy_Data %>%
+  mutate(Relative_Accuracy=Average_Accuracy/Full_Accuracy) %>%
+  ggplot(.,aes(x=Subsample_Size,y=Relative_Accuracy))+geom_point()+
+  geom_line()+scale_colour_viridis_d()+facet_wrap(~Type,ncol = 1)+
+  theme_light()+xlab("Sub sample size")+
+  ylab("Relative Average MSE y")+ggtitle("Average MSE y")->Plot_list[[6]]
+
+ggarrange(plotlist = Plot_list,nrow = 1,ncol = 6,common.legend = TRUE)
 
 ```
 
