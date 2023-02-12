@@ -326,7 +326,11 @@ Selected_Models_mMSE<-c("Optimal subsampling mMSE: Data Model",
 Colors_mMSE<-c("#cc0000", 
                "#ff578a","#ff578a","#ff578a",
                "darkgreen")
-                        
+                  
+LineType_mMSE<-c("dashed",
+                 "dotted","dotted","dotted",
+                 "solid")
+      
 Selected_Models_mVc<-c("Optimal subsampling mVc: Data Model",
                        "Optimal subsampling mVc: Incorrect Model 1",
                        "Optimal subsampling mVc: Incorrect Model 2",
@@ -340,9 +344,14 @@ Colors_mVc<-c("#cc0000",
               "#ff578a","#ff578a","#ff578a",
               "darkgreen")
 
+LineType_mVc<-c("dashed",
+                "dotted","dotted","dotted",
+                "solid")
+
 Theme_special<-function()
 {
-  theme(axis.text.x = element_text(color = "black",size=12, angle = 45, hjust=0.75), #, vjust = 0.5
+  theme(legend.key.width=unit(1.2,"cm"),
+        axis.text.x = element_text(color = "black",size=12, angle = 45, hjust=0.75), #, vjust = 0.5
         axis.text.y = element_text(color = "black",size=12), #, vjust = 0.5, hjust=1
         strip.text = element_text(colour = "black",size = 12,face="bold"),
         panel.grid.minor.x = element_blank(),
@@ -356,11 +365,13 @@ Theme_special<-function()
 #Identical_ro<-Identical_ro[Identical_ro$Subsample_Size %in% seq(100,1000,100),]
 
 Identical_ro[Identical_ro$Metric=="Model Information" & Identical_ro$Model %in% Selected_Models_mMSE,] %>%
-  ggplot(.,aes(x=Subsample_Size,y=`Estimated Values`,color=Model))+
+  ggplot(.,aes(x=Subsample_Size,y=`Estimated Values`,color=Model,linetype=Model))+
   scale_x_continuous(labels = unique(Identical_ro$Subsample_Size),
                      breaks = unique(Identical_ro$Subsample_Size))+
-  geom_point(size=1.75)+geom_line(size=1)+
+  #geom_point(size=1.75)+
+  geom_line(size=1)+
   scale_color_manual(values=Colors_mMSE)+
+  scale_linetype_manual(values=LineType_mMSE)+
   facet_wrap(~Covariate,scales = "free_y",ncol = 4)+
   xlab(expression(paste(r[0],' + ',r[1],'=1000 and ',r[0])))+
   ylab("Average Model Information")+expand_limits(y = 0)+
@@ -370,11 +381,13 @@ Identical_ro[Identical_ro$Metric=="Model Information" & Identical_ro$Model %in% 
 Temp_legend_mMSE<-get_legend(Temp_plot_mMSE)
 
 Identical_ro[Identical_ro$Metric=="Model Information" & Identical_ro$Model %in% Selected_Models_mVc,] %>%
-  ggplot(.,aes(x=Subsample_Size,y=`Estimated Values`,color=Model))+
+  ggplot(.,aes(x=Subsample_Size,y=`Estimated Values`,color=Model,linetype=Model))+
   scale_x_continuous(labels = unique(Identical_ro$Subsample_Size),
                      breaks = unique(Identical_ro$Subsample_Size))+
-  geom_point(size=1.75)+geom_line(size=1)+
-  scale_color_manual(values=Colors_mMSE)+
+  #geom_point(size=1.75)+
+  geom_line(size=1)+
+  scale_color_manual(values=Colors_mVc)+
+  scale_linetype_manual(values=LineType_mVc)+
   facet_wrap(~Covariate,scales = "free_y",ncol = 4)+
   xlab(expression(paste(r[0],' + ',r[1],'=1000 and ',r[0])))+
   ylab("Average Model Information")+expand_limits(y = 0)+
@@ -384,11 +397,12 @@ Identical_ro[Identical_ro$Metric=="Model Information" & Identical_ro$Model %in% 
 Temp_legend_mVc<-get_legend(Temp_plot_mVc)
 
 Identical_ro[Identical_ro$Metric=="Model Information" & Identical_ro$Model %in% Selected_Models_mMSE,] %>%
-  ggplot(.,aes(x=Subsample_Size,y=log(`Estimated Values`),color=Model))+
+  ggplot(.,aes(x=Subsample_Size,y=log(`Estimated Values`),color=Model,linetype=Model))+
   scale_x_continuous(labels = unique(Identical_ro$Subsample_Size),
                      breaks = unique(Identical_ro$Subsample_Size))+
   geom_point(size=1.75)+geom_line(size=1)+
   scale_color_manual(values=Colors_mMSE)+
+  scale_linetype_manual(values=LineType_mMSE)+
   facet_wrap(~Covariate,scales = "free_y",ncol = 2)+
   xlab(expression(paste(r[0],' + ',r[1],'=1000 and ',r[0])))+
   ylab("log(Average Model Information)")+#expand_limits(y = 0)+
@@ -396,11 +410,12 @@ Identical_ro[Identical_ro$Metric=="Model Information" & Identical_ro$Model %in% 
   theme_bw()+Theme_special()->p1
 
 Identical_ro[Identical_ro$Metric=="Model Information" & Identical_ro$Model %in% Selected_Models_mVc,] %>%
-  ggplot(.,aes(x=Subsample_Size,y=log(`Estimated Values`),color=Model))+
+  ggplot(.,aes(x=Subsample_Size,y=log(`Estimated Values`),color=Model,linetype=Model))+
   scale_x_continuous(labels = unique(Identical_ro$Subsample_Size),
                      breaks = unique(Identical_ro$Subsample_Size))+
   geom_point(size=1.75)+geom_line(size=1)+
   scale_color_manual(values=Colors_mVc)+
+  scale_linetype_manual(values=LineType_mVc)+
   facet_wrap(~Covariate,scales = "free_y",ncol = 2)+
   xlab(expression(paste(r[0],' + ',r[1],'=1000 and ',r[0])))+
   ylab("log(Average Model Information)")+#expand_limits(y = 0)+
@@ -408,11 +423,12 @@ Identical_ro[Identical_ro$Metric=="Model Information" & Identical_ro$Model %in% 
   theme_bw()+Theme_special()->p2
   
 Identical_ro[Identical_ro$Metric=="MSE" & Identical_ro$Model %in% Selected_Models_mMSE,] %>%
-  ggplot(.,aes(x=Subsample_Size,y=log(`Estimated Values`),color=Model))+
+  ggplot(.,aes(x=Subsample_Size,y=log(`Estimated Values`),color=Model,linetype=Model))+
   scale_x_continuous(labels = unique(Identical_ro$Subsample_Size),
                      breaks = unique(Identical_ro$Subsample_Size))+
   geom_point(size=1.75)+geom_line(size=1)+
   scale_color_manual(values=Colors_mMSE)+
+  scale_linetype_manual(values=LineType_mMSE)+
   facet_wrap(~Covariate,scales = "free_y",ncol = 2)+
   xlab(expression(paste(r[0],' + ',r[1],'=1000 and ',r[0])))+
   ylab("log(SMSE)")+#expand_limits(y = 0)+
@@ -421,11 +437,12 @@ Identical_ro[Identical_ro$Metric=="MSE" & Identical_ro$Model %in% Selected_Model
 
 
 Identical_ro[Identical_ro$Metric=="MSE" & Identical_ro$Model %in% Selected_Models_mVc,] %>%
-  ggplot(.,aes(x=Subsample_Size,y=log(`Estimated Values`),color=Model))+
+  ggplot(.,aes(x=Subsample_Size,y=log(`Estimated Values`),color=Model,linetype=Model))+
   scale_x_continuous(labels = unique(Identical_ro$Subsample_Size),
                      breaks = unique(Identical_ro$Subsample_Size))+
   geom_point(size=1.75)+geom_line(size=1)+
   scale_color_manual(values=Colors_mVc)+
+  scale_linetype_manual(values=LineType_mVc)+
   facet_wrap(~Covariate,scales = "free_y",ncol = 2)+
   xlab(expression(paste(r[0],' + ',r[1],'=1000 and ',r[0])))+
   ylab("log(SMSE)")+#expand_limits(y = 0)+
@@ -433,11 +450,12 @@ Identical_ro[Identical_ro$Metric=="MSE" & Identical_ro$Model %in% Selected_Model
   theme_bw()+Theme_special()->p4
 
 Identical_ro[Identical_ro$Metric=="Average MSE Y" & Identical_ro$Model %in% Selected_Models_mMSE,] %>%
-  ggplot(.,aes(x=Subsample_Size,y=log(`Estimated Values`),color=Model))+
+  ggplot(.,aes(x=Subsample_Size,y=log(`Estimated Values`),color=Model,linetype=Model))+
   scale_x_continuous(labels = unique(Identical_ro$Subsample_Size),
                      breaks = unique(Identical_ro$Subsample_Size))+
   geom_point(size=1.75)+geom_line(size=1)+
   scale_color_manual(values=Colors_mMSE)+
+  scale_linetype_manual(values=LineType_mMSE)+
   facet_wrap(~Covariate,scales = "free_y",ncol = 2)+
   xlab(expression(paste(r[0],' + ',r[1],'=1000 and ',r[0])))+
   ylab("log(Average MSE of Y)")+#expand_limits(y = 0)+
@@ -446,11 +464,12 @@ Identical_ro[Identical_ro$Metric=="Average MSE Y" & Identical_ro$Model %in% Sele
 
 
 Identical_ro[Identical_ro$Metric=="Average MSE Y" & Identical_ro$Model %in% Selected_Models_mVc,] %>%
-  ggplot(.,aes(x=Subsample_Size,y=log(`Estimated Values`),color=Model))+
+  ggplot(.,aes(x=Subsample_Size,y=log(`Estimated Values`),color=Model,linetype=Model))+
   scale_x_continuous(labels = unique(Identical_ro$Subsample_Size),
                      breaks = unique(Identical_ro$Subsample_Size))+
   geom_point(size=1.75)+geom_line(size=1)+
   scale_color_manual(values=Colors_mVc)+
+  scale_linetype_manual(values=LineType_mVc)+
   facet_wrap(~Covariate,scales = "free_y",ncol = 2)+
   xlab(expression(paste(r[0],' + ',r[1],'=1000 and ',r[0])))+
   ylab("log(Average MSE of Y)")+#expand_limits(y = 0)+
@@ -458,11 +477,12 @@ Identical_ro[Identical_ro$Metric=="Average MSE Y" & Identical_ro$Model %in% Sele
   theme_bw()+Theme_special()->p6
 
 Identical_ro[Identical_ro$Metric=="MSE for MLE" & Identical_ro$Model %in% Selected_Models_mMSE,] %>%
-  ggplot(.,aes(x=Subsample_Size,y=log(`Estimated Values`),color=Model))+
+  ggplot(.,aes(x=Subsample_Size,y=log(`Estimated Values`),color=Model,linetype=Model))+
   scale_x_continuous(labels = unique(Identical_ro$Subsample_Size),
                      breaks = unique(Identical_ro$Subsample_Size))+
   geom_point(size=1.75)+geom_line(size=1)+
   scale_color_manual(values=Colors_mMSE)+
+  scale_linetype_manual(values=LineType_mMSE)+
   facet_wrap(~Covariate,scales = "free_y",ncol = 2)+
   xlab(expression(paste(r[0],' + ',r[1],'=1000 and ',r[0])))+
   ylab("log(SMSE)")+#expand_limits(y = 0)+
@@ -471,11 +491,12 @@ Identical_ro[Identical_ro$Metric=="MSE for MLE" & Identical_ro$Model %in% Select
 
 
 Identical_ro[Identical_ro$Metric=="MSE for MLE" & Identical_ro$Model %in% Selected_Models_mVc,] %>%
-  ggplot(.,aes(x=Subsample_Size,y=log(`Estimated Values`),color=Model))+
+  ggplot(.,aes(x=Subsample_Size,y=log(`Estimated Values`),color=Model,linetype=Model))+
   scale_x_continuous(labels = unique(Identical_ro$Subsample_Size),
                      breaks = unique(Identical_ro$Subsample_Size))+
   geom_point(size=1.75)+geom_line(size=1)+
   scale_color_manual(values=Colors_mVc)+
+  scale_linetype_manual(values=LineType_mVc)+
   facet_wrap(~Covariate,scales = "free_y",ncol = 2)+
   xlab(expression(paste(r[0],' + ',r[1],'=1000 and ',r[0])))+
   ylab("log(SMSE)")+#expand_limits(y = 0)+
@@ -490,31 +511,31 @@ ggarrange(p7,nrow = 1,ncol = 1,legend.grob = Temp_legend_mMSE,legend = "bottom")
 ggarrange(p8,nrow = 1,ncol = 1,legend.grob = Temp_legend_mVc,legend = "bottom")
 
 ggarrange(p1,p3,nrow = 2,ncol = 1,legend.grob = Temp_legend_mMSE,legend = "bottom",labels = "auto") %>%
-  ggexport(filename = "r1_SMSE_MI_PR_TV_Uni_mMSE.pdf",res=300,width = 12,height = 16)
+  ggexport(filename = here("Article_Plots","r1_SMSE_MI_PR_TV_Uni_mMSE.pdf"),res=300,width = 12,height = 16)
 ggarrange(p2,p4,nrow = 2,ncol = 1,legend.grob = Temp_legend_mVc,legend = "bottom",labels = "auto") %>%
-  ggexport(filename = "r1_SMSE_MI_PR_TV_Uni_mVc.pdf",res=300,width = 12,height = 16)
+  ggexport(filename = here("Article_Plots","r1_SMSE_MI_PR_TV_Uni_mVc.pdf"),res=300,width = 12,height = 16)
 ggarrange(p5,nrow = 1,ncol = 1,legend.grob = Temp_legend_mMSE,legend = "bottom") %>%
-  ggexport(filename = "r1_ACCURACY_PR_TV_Uni_mMSE.pdf",res=300,width = 12,height = 12)
+  ggexport(filename = here("Article_Plots","r1_ACCURACY_PR_TV_Uni_mMSE.pdf"),res=300,width = 12,height = 12)
 ggarrange(p6,nrow = 1,ncol = 1,legend.grob = Temp_legend_mVc,legend = "bottom") %>%
-  ggexport(filename = "r1_ACCURACY_PR_TV_Uni_mVc.pdf",res=300,width = 12,height = 12)
+  ggexport(filename = here("Article_Plots","r1_ACCURACY_PR_TV_Uni_mVc.pdf"),res=300,width = 12,height = 12)
 
 ggarrange(p7,nrow = 1,ncol = 1,legend.grob = Temp_legend_mMSE,legend = "bottom") %>%
-  ggexport(filename = "r1_SMSE_for_MLE_MI_PR_TV_Uni_mMSE.pdf",res=300,width = 12,height = 12)
+  ggexport(filename = here("Article_Plots","r1_SMSE_for_MLE_MI_PR_TV_Uni_mMSE.pdf"),res=300,width = 12,height = 12)
 ggarrange(p8,nrow = 1,ncol = 1,legend.grob = Temp_legend_mVc,legend = "bottom") %>%
-  ggexport(filename = "r1_SMSE_for_MLE_MI_PR_TV_Uni_mVc.pdf",res=300,width = 12,height = 12)
+  ggexport(filename = here("Article_Plots","r1_SMSE_for_MLE_MI_PR_TV_Uni_mVc.pdf"),res=300,width = 12,height = 12)
 
 ggarrange(p1,p3,nrow = 2,ncol = 1,legend.grob = Temp_legend_mMSE,legend = "bottom",labels = "auto") %>%
-  ggsave(filename = "r1_SMSE_MI_PR_TV_Uni_mMSE.eps",device="eps",dpi=300,width = 12,height = 16)
+  ggsave(filename = here("Article_Plots","r1_SMSE_MI_PR_TV_Uni_mMSE.eps"),device="eps",dpi=300,width = 12,height = 16)
 ggarrange(p2,p4,nrow = 2,ncol = 1,legend.grob = Temp_legend_mVc,legend = "bottom",labels = "auto") %>% 
-  ggsave(filename = "r1_SMSE_MI_PR_TV_Uni_mVc.eps",device="eps",dpi=300,width = 12,height = 16)
+  ggsave(filename = here("Article_Plots","r1_SMSE_MI_PR_TV_Uni_mVc.eps"),device="eps",dpi=300,width = 12,height = 16)
 ggarrange(p5,nrow = 1,ncol = 1,legend.grob = Temp_legend_mMSE,legend = "bottom") %>%
-  ggsave(filename = "r1_ACCURACY_PR_TV_Uni_mMSE.eps",device="eps",dpi=300,width = 12,height = 12)
+  ggsave(filename = here("Article_Plots","r1_ACCURACY_PR_TV_Uni_mMSE.eps"),device="eps",dpi=300,width = 12,height = 12)
 ggarrange(p6,nrow = 1,ncol = 1,legend.grob = Temp_legend_mVc,legend = "bottom") %>%
-  ggsave(filename = "r1_ACCURACY_PR_TV_Uni_mVc.eps",device="eps",dpi=300,width = 12,height = 12)
+  ggsave(filename = here("Article_Plots","r1_ACCURACY_PR_TV_Uni_mVc.eps"),device="eps",dpi=300,width = 12,height = 12)
 
 ggarrange(p7,nrow = 1,ncol = 1,legend.grob = Temp_legend_mMSE,legend = "bottom") %>%
-  ggexport(filename = "r1_SMSE_for_MLE_MI_PR_TV_Uni_mMSE.eps",res=300,width = 12,height = 12)
+  ggexport(filename = here("Article_Plots","r1_SMSE_for_MLE_MI_PR_TV_Uni_mMSE.eps"),res=300,width = 12,height = 12)
 ggarrange(p8,nrow = 1,ncol = 1,legend.grob = Temp_legend_mVc,legend = "bottom") %>%
-  ggexport(filename = "r1_SMSE_for_MLE_MI_PR_TV_Uni_mVc.eps",res=300,width = 12,height = 12)
+  ggexport(filename = here("Article_Plots","r1_SMSE_for_MLE_MI_PR_TV_Uni_mVc.eps"),res=300,width = 12,height = 12)
 ```
 
