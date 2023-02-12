@@ -1,17 +1,21 @@
 library(here)
-library(ezknitr)
 library(rmarkdown)
 
 Model<-c("Model_1","Model_2",
-         "Model_3","Model_4"); #i=4
+         "Model_3","Model_4"); i=1
 
 for(i in 1:length(Model))
 {
   # Publication Ready ----
-  ezknit(file=here("Publication_Ready.Rmd"),
-         out_dir=here("Publication_Ready",Model[i]),
-         fig_dir = c("Plots"),
-         params=list("Model_Path"=Model[i]),
-         verbose = TRUE,keep_md = TRUE,keep_html = FALSE)
-  #open_output_dir()
+  render(input=here("Publication_Ready.Rmd"),
+         output_format = "github_document",
+         output_file = "Publication_Ready",
+         output_dir=here("Publication_Ready",Model[i]),
+         params=list("Model_Path"=Model[i]))
+  
+  # render(input=here("r1_Publication_Ready.Rmd"),
+  #        output_format = "github_document",
+  #        output_file = "r1_Publication_Ready",
+  #        output_dir=here("Publication_Ready",Model[i]),
+  #        params=list("Model_Path"=Model[i]))
 }
