@@ -24,13 +24,13 @@ Run_RandomSample <- function(Replicates,FullData,Subsample_Size,N,Choices,No_of_
   
   All_Parameter<-list()
   Est_Parameter <- matrix(NA,nrow = length(Choices),ncol = ncol(FullData))
-
+  
   All_Bias<-list()
   Bias <- matrix(NA,nrow = length(Choices),ncol = ncol(FullData))
-
+  
   All_optimality<-list()
   optimality <- matrix(NA,nrow = length(Choices),ncol = 3)
-
+  
   Final_Parameter<-Final_optimality<-Final_Bias<-list()
   
   for (k in 1:No_of_Models) 
@@ -68,18 +68,18 @@ Run_RandomSample <- function(Replicates,FullData,Subsample_Size,N,Choices,No_of_
   return(list("EstPar"=Final_Parameter,
               "Utility"=Final_optimality,
               "Bias"=Final_Bias#,"Subsampled_Data"=Final_Sample_RS
-              )
-         )
+  )
+  )
 }
 
 Run_RandomSample<-cmpfun(Run_RandomSample)
 
 #Save the Random Sample function for No Correlated Covariate Data ----
 save(Run_RandomSample,Cordeiro,
-     file=here("Non_Identical_r0","Simulation_Setup","Classical","Analysis","Random_Sampling","Run_RandomSample.RData"))
+     file=here("Non_Identical_r0","Simulation_Setup","Analysis","Random_Sampling","Run_RandomSample.RData"))
 
 rm(list = ls())
 
 # Run the Random sampling method ----
-source(here("Non_Identical_r0","Simulation_Setup","Classical","Analysis","Random_Sampling",
+source(here("Non_Identical_r0","Simulation_Setup","Analysis","Random_Sampling",
             "Simulation_Results_Random_Sampling.R"))

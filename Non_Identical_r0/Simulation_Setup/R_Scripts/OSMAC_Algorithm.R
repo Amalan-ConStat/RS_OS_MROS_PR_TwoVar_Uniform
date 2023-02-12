@@ -38,12 +38,20 @@ AlgTwoStp <- function(r1=r1, r2=r2,Y,X,Real_Data,n,Model) {
     #Sample.mMSE<-list()
     #Sample.mVc<-list()
     
-    ## mVC
+    ## mVc
+    PI.mVc <- sqrt((Y - P.prop)^2 * rowSums(X^2))
+    PI.mVc <- PI.mVc / sum(PI.mVc)
+    
+    ## mMSE
+    p.prop <- P.prop[idx.prop]
+    w.prop <- p.prop
+    W.prop <- solve(t(x.prop) %*% (x.prop * w.prop * pinv.prop))
+    PI.mMSE <- sqrt((Y - P.prop)^2 * rowSums((X%*%W.prop)^2))
+    PI.mMSE <- PI.mMSE / sum(PI.mMSE)
+    
     for (i in 1:length(r2)) 
     {
-      PI.mVc <- sqrt((Y - P.prop)^2 * rowSums(X^2))
-      PI.mVc <- PI.mVc / sum(PI.mVc)
-      
+      # mVc
       idx.mVc <- sample(1:n, r2[i]-r1, T, PI.mVc)
       x.mVc <- X[c(idx.mVc, idx.prop),]
       y.mVc <- Y[c(idx.mVc, idx.prop)]
@@ -65,11 +73,6 @@ AlgTwoStp <- function(r1=r1, r2=r2,Y,X,Real_Data,n,Model) {
       Bias_mVc[i,]<-Cordeiro(XData=x.mVc,With_bias = beta.mVc[i,])
       
       ## mMSE
-      p.prop <- P.prop[idx.prop]
-      w.prop <- p.prop
-      W.prop <- solve(t(x.prop) %*% (x.prop * w.prop * pinv.prop))
-      PI.mMSE <- sqrt((Y - P.prop)^2 * rowSums((X%*%W.prop)^2))
-      PI.mMSE <- PI.mMSE / sum(PI.mMSE)
       idx.mMSE <- sample(1:n, r2[i]-r1, T, PI.mMSE)
       x.mMSE <- X[c(idx.mMSE, idx.prop),]
       y.mMSE <- Y[c(idx.mMSE, idx.prop)]
@@ -97,7 +100,7 @@ AlgTwoStp <- function(r1=r1, r2=r2,Y,X,Real_Data,n,Model) {
     opt <- list("Est_Theta_mMSE"=cbind(r2,beta.mMSE),"Utility_mMSE"=Utility_mMSE,"Bias_mMSE"=cbind(r2,Bias_mMSE),
                 #"Sample_mMSE"=Sample_mMSE,
                 "Est_Theta_mVc"=cbind(r2,beta.mVc),"Utility_mVc"=Utility_mVc,"Bias_mVc"=cbind(r2,Bias_mVc)#,"Sample_mVc"=Sample_mVc
-                )
+    )
     msg <- c(fit.prop$message, fit.mMSE$message, fit.mVc$message)
     return(list(opt=opt, msg=msg)) 
   }
@@ -130,12 +133,20 @@ AlgTwoStp <- function(r1=r1, r2=r2,Y,X,Real_Data,n,Model) {
     #Sample.mMSE<-list()
     #Sample.mVc<-list()
     
-    ## mVC
+    ## mVc
+    PI.mVc <- sqrt((Y - P.prop)^2 * rowSums(X^2))
+    PI.mVc <- PI.mVc / sum(PI.mVc)
+    
+    ## mMSE
+    p.prop <- P.prop[idx.prop]
+    w.prop <- p.prop
+    W.prop <- solve(t(x.prop) %*% (x.prop * w.prop * pinv.prop))
+    PI.mMSE <- sqrt((Y - P.prop)^2 * rowSums((X%*%W.prop)^2))
+    PI.mMSE <- PI.mMSE / sum(PI.mMSE)
+    
     for (i in 1:length(r2)) 
     {
-      PI.mVc <- sqrt((Y - P.prop)^2 * rowSums(X^2))
-      PI.mVc <- PI.mVc / sum(PI.mVc)
-      
+      ## mVc
       idx.mVc <- sample(1:n, r2[i]-r1, T, PI.mVc)
       
       x_Real.mVc <- x_Real[c(idx.mVc, idx.prop),]
@@ -158,12 +169,6 @@ AlgTwoStp <- function(r1=r1, r2=r2,Y,X,Real_Data,n,Model) {
       Bias_mVc[i,]<-Cordeiro(XData=x_Real.mVc,With_bias = beta.mVc[i,])
       
       ## mMSE
-      p.prop <- P.prop[idx.prop]
-      w.prop <- p.prop
-      W.prop <- solve(t(x.prop) %*% (x.prop * w.prop * pinv.prop))
-      PI.mMSE <- sqrt((Y - P.prop)^2 * rowSums((X%*%W.prop)^2))
-      PI.mMSE <- PI.mMSE / sum(PI.mMSE)
-      
       idx.mMSE <- sample(1:n, r2[i]-r1, T, PI.mMSE)
       x_Real.mMSE <- x_Real[c(idx.mMSE, idx.prop),]
       y_Real.mMSE <- Y[c(idx.mMSE, idx.prop)]
@@ -196,7 +201,7 @@ AlgTwoStp <- function(r1=r1, r2=r2,Y,X,Real_Data,n,Model) {
     opt <- list("Est_Theta_mMSE"=cbind(r2,beta.mMSE),"Utility_mMSE"=Utility_mMSE,"Bias_mMSE"=cbind(r2,Bias_mMSE),
                 #"Sample_mMSE"=Sample_mMSE,
                 "Est_Theta_mVc"=cbind(r2,beta.mVc),"Utility_mVc"=Utility_mVc,"Bias_mVc"=cbind(r2,Bias_mVc)#,"Sample_mVc"=Sample_mVc
-                )
+    )
     msg <- c(fit_Real.prop$message, fit_Real.mMSE$message, fit_Real.mVc$message)
     return(list(opt=opt, msg=msg)) 
   }

@@ -4,7 +4,7 @@ library(LaplacesDemon)
 library(matrixStats)
 
 # Load the OSMAC algorithm
-source(here("Non_Identical_r0","Simulation_Setup","Classical","R_Scripts","OSMAC_Model_Free",
+source(here("Non_Identical_r0","Simulation_Setup","R_Scripts","OSMAC_Model_Free",
             "OSMAC_Algorithm_Model_Free.R"))
 
 OSMAC_MF<-cmpfun(OSMAC_MF)
@@ -16,13 +16,13 @@ Run_OSMAC_MF<-function(Replicates,r1,r2,Y,X,alpha,combs,All_Covariates,N)
   # From r0 and r conduct OSMAC subsampling for Logistic regression-----
   Parameter_mMSE<-replicate(length(combs),list()) ;
   Parameter_mVc<-replicate(length(combs),list()) ;
-
+  
   Bias_mMSE<-replicate(length(combs),list()) ; 
   Bias_mVc<-replicate(length(combs),list()) ; 
-
+  
   Utility_mMSE<-replicate(length(combs),list()) ; 
   Utility_mVc<-replicate(length(combs),list()) ;
-
+  
   # Sample_mMSE<-replicate(length(combs),list()) ;  
   # Sample_mVc<-replicate(length(combs),list()) ; 
   
@@ -47,12 +47,12 @@ Run_OSMAC_MF<-function(Replicates,r1,r2,Y,X,alpha,combs,All_Covariates,N)
         # Sample_mVc[[j]][[i]]<-cbind(i,Results$Sample_mVc[,colnames(Results$Sample_mVc) %in% c("r2","Y","SP",combs[[j]]) ])
         
         colnames(Parameter_mMSE[[j]][[i]])<-colnames(Parameter_mVc[[j]][[i]])<-
-        colnames(Bias_mMSE[[j]][[i]])<-colnames(Bias_mVc[[j]][[i]])<-
+          colnames(Bias_mMSE[[j]][[i]])<-colnames(Bias_mVc[[j]][[i]])<-
           c("Subsample_Size",paste0("Theta",0:(length(combs[[j]])-1)))
-          
+        
         colnames(Utility_mMSE[[j]][[i]])<-colnames(Utility_mVc[[j]][[i]])<-
           c("Subsample_Size",paste0(c("A","D"),"-optimality"))
-          
+        
         # colnames(Sample_mMSE[[j]][[i]])<-colnames(Sample_mVc[[j]][[i]])<-
         #   c("Simulation","Subsample_Size","Y","SP",combs[[j]])
       }
@@ -102,22 +102,22 @@ Run_OSMAC_MF<-function(Replicates,r1,r2,Y,X,alpha,combs,All_Covariates,N)
   
   save(list= c(paste0("Results_OSMAC_",1:length(combs)),paste0("Bias_OSMAC_",1:length(combs)),
                paste0("Utility_OSMAC_",1:length(combs))),
-       file = here("Non_Identical_r0","Simulation_Setup","Classical","Analysis","OSMAC_Model_Free",
+       file = here("Non_Identical_r0","Simulation_Setup","Analysis","OSMAC_Model_Free",
                    "Results","OSMAC_MF_output.RData"))
-
+  
   save(list = c(paste0("Results_OSMAC_",1:length(combs)),paste0("Bias_OSMAC_",1:length(combs)),
                 paste0("Utility_OSMAC_",1:length(combs))),
-       file = here("Non_Identical_r0","Outputs","Classical",Model_Path,"OSMAC_Model_Free",
+       file = here("Non_Identical_r0","Outputs",Model_Path,"OSMAC_Model_Free",
                    "OSMAC_MF_output.RData"))
   
   # for (i in 1:length(combs)) 
   # {
   #   save(list = c(paste0("Sample_OSMAC_",i)),
-  #        file = here("Non_Identical_r0","Simulation_Setup","Classical","Analysis","OSMAC_Model_Free",
+  #        file = here("Non_Identical_r0","Simulation_Setup","Analysis","OSMAC_Model_Free",
   #                    "Results",paste0("OSMAC_MF_Samples_output_",i,".RData")))
   #   
   #   save(list = c(paste0("Sample_OSMAC_",i)),
-  #        file = here("Non_Identical_r0","Outputs","Classical",Model_Path,"OSMAC_Model_Free",
+  #        file = here("Non_Identical_r0","Outputs",Model_Path,"OSMAC_Model_Free",
   #                    paste0("OSMAC_MF_Samples_output_",i,".RData")))
   # }
 }
@@ -126,11 +126,11 @@ Run_OSMAC_MF<-cmpfun(Run_OSMAC_MF)
 
 #Save the OSMAC Sample function----
 save(list =c("Run_OSMAC_MF","OSMAC_MF","Cordeiro"),
-     file=here("Non_Identical_r0","Simulation_Setup","Classical","Analysis",
+     file=here("Non_Identical_r0","Simulation_Setup","Analysis",
                "OSMAC_Model_Free","Run_OSMAC.RData"))
 
 rm(list = ls())
 
 # Run the OSMAC sampling method ----
-source(here("Non_Identical_r0","Simulation_Setup","Classical","Analysis","OSMAC_Model_Free",
+source(here("Non_Identical_r0","Simulation_Setup","Analysis","OSMAC_Model_Free",
             "Simulation_Results_OSMAC_Sampling.R"))

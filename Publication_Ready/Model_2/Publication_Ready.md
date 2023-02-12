@@ -1,23 +1,12 @@
----
-title: "Publication Ready"
-author: "Amalan"
-date: 'September 28, 2022'
-output: github_document
----
+Publication Ready
+================
+Amalan
+February 12, 2023
 
+# Using Uniform Distribution for Data
 
+## Model : Model_2
 
-# Using Normal Distribution for Data
+![](C:\Work\PhD\Simulation\RS_vs_OS_vs_MROS\Poisson%20Regression\Two_Variable\Uniform%20Distribution\Publication_Ready\Model_2\Publication_Ready_files/figure-gfm/Identical%20r0%20Plots-1.png)<!-- -->![](C:\Work\PhD\Simulation\RS_vs_OS_vs_MROS\Poisson%20Regression\Two_Variable\Uniform%20Distribution\Publication_Ready\Model_2\Publication_Ready_files/figure-gfm/Identical%20r0%20Plots-2.png)<!-- -->![](C:\Work\PhD\Simulation\RS_vs_OS_vs_MROS\Poisson%20Regression\Two_Variable\Uniform%20Distribution\Publication_Ready\Model_2\Publication_Ready_files/figure-gfm/Identical%20r0%20Plots-3.png)<!-- -->
 
-## Model : Model_2 
-
-
-
-
-
-
-![plot of chunk Identical r0 Plots](Plots/Identical r0 Plots-1.png)![plot of chunk Identical r0 Plots](Plots/Identical r0 Plots-2.png)
-
-
-
-![plot of chunk All Plots](Plots/All Plots-1.png)![plot of chunk All Plots](Plots/All Plots-2.png)
+![](C:\Work\PhD\Simulation\RS_vs_OS_vs_MROS\Poisson%20Regression\Two_Variable\Uniform%20Distribution\Publication_Ready\Model_2\Publication_Ready_files/figure-gfm/All%20Plots-1.png)<!-- -->![](C:\Work\PhD\Simulation\RS_vs_OS_vs_MROS\Poisson%20Regression\Two_Variable\Uniform%20Distribution\Publication_Ready\Model_2\Publication_Ready_files/figure-gfm/All%20Plots-2.png)<!-- -->![](C:\Work\PhD\Simulation\RS_vs_OS_vs_MROS\Poisson%20Regression\Two_Variable\Uniform%20Distribution\Publication_Ready\Model_2\Publication_Ready_files/figure-gfm/All%20Plots-3.png)<!-- -->
