@@ -13,7 +13,7 @@ Cordeiro<-function(XData,With_bias)
 }
 
 # Two step OSMAC ----
-AlgTwoStp <- function(r1=r1, r2=r2,Y,X,n,Real_Data,alpha,combs,All_Covariates){
+AlgTwoStp <- function(r1=r1, r2=r2,Y,X,n,Real_Data,alpha,combs,All_Covariates,Theta){
   Y_Real<-Real_Data[,1] #  Real Data
   X_Real<-Real_Data[,-1] # Real Data
   
@@ -121,7 +121,6 @@ AlgTwoStp <- function(r1=r1, r2=r2,Y,X,n,Real_Data,alpha,combs,All_Covariates){
       exp(X[,All_Covariates %in% combs[[a]] ] %*% beta.prop[[a]]) # Assumed Data
     })
     P_Real.prop  <- exp(X_Real %*% beta_Real.prop) # Real Data
-    
     
     ## mVc
     PI_Real.mVc <- sqrt((Y - P_Real.prop)^2 * rowSums(X_Real^2)) # Real Data
@@ -251,7 +250,10 @@ AlgTwoStp <- function(r1=r1, r2=r2,Y,X,n,Real_Data,alpha,combs,All_Covariates){
     V_Temp<-t(x_Real.mVc)%*% (x_Real.mVc * ((as.vector(y_Real.mVc)-pi)* pinv_Real.mVc)^2)   
     V_Final<-Mx %*% V_Temp %*% Mx
     
-    Utility_mVc_Real[i,]<-cbind(r1[i],tr(V_Final),det(solve(V_Final)))
+    pi_1<- c(exp(x_Real.mVc %*% Theta))
+    Mx_1<- t(x_Real.mVc) %*% (x_Real.mVc * pi_1)
+    
+    Utility_mVc_Real[i,]<-cbind(r1[i],tr(V_Final),det(Mx_1))
     Bias_mVc_Real[i,]<-Cordeiro(XData=x_Real.mVc,With_bias = beta.mVc_Real[i,])
     
     # Assumed Data Old probabilities
@@ -276,9 +278,17 @@ AlgTwoStp <- function(r1=r1, r2=r2,Y,X,n,Real_Data,alpha,combs,All_Covariates){
       Mx[[a]] %*% V_Temp[[a]] %*% Mx[[a]]
     }) 
     
+    pi_1<- lapply(1:length(combs), function(a){
+      c(exp(x_Assumed.mVc[[a]] %*% Theta))
+    })
+    
+    Mx_1<-lapply(1:length(combs),function(a){
+      t(x_Assumed.mVc[[a]]) %*% (x_Assumed.mVc[[a]] * pi_1[[a]]) 
+    })
+    
     for (j in 1:length(combs)) 
     {
-      Utility_mVc_Old[[j]][i,]<-cbind(r1[i],tr(V_Final[[j]]),det(solve(V_Final[[j]])))
+      Utility_mVc_Old[[j]][i,]<-cbind(r1[i],tr(V_Final[[j]]),det(Mx_1[[j]]))
       Bias_mVc_Old[[j]][i,]<-Cordeiro(XData=x_Assumed.mVc[[j]],With_bias = beta.mVc_Old[[j]][i,])    
     }
     
@@ -304,9 +314,17 @@ AlgTwoStp <- function(r1=r1, r2=r2,Y,X,n,Real_Data,alpha,combs,All_Covariates){
       Mx[[a]] %*% V_Temp[[a]] %*% Mx[[a]]
     }) 
     
+    pi_1<- lapply(1:length(combs),function(a){
+      c(exp(x_Assumed.mVc[[a]] %*% Theta))
+    })
+    
+    Mx_1<-lapply(1:length(combs),function(a){
+      t(x_Assumed.mVc[[a]]) %*% (x_Assumed.mVc[[a]] * pi_1[[a]])
+    })
+    
     for (j in 1:length(combs)) 
     {
-      Utility_mVc_New[[j]][i,]<-cbind(r1[i],tr(V_Final[[j]]),det(solve(V_Final[[j]])))
+      Utility_mVc_New[[j]][i,]<-cbind(r1[i],tr(V_Final[[j]]),det(Mx_1[[j]]))
       Bias_mVc_New[[j]][i,]<-Cordeiro(XData=x_Assumed.mVc[[j]],With_bias = beta.mVc_New[[j]][i,])    
     }
     
@@ -316,7 +334,10 @@ AlgTwoStp <- function(r1=r1, r2=r2,Y,X,n,Real_Data,alpha,combs,All_Covariates){
     V_Temp<-t(x_join.mVc)%*%(x_join.mVc * ((as.vector(y_join.mVc)-pi)* pinv_join.mVc)^2 )
     V_Final<-Mx %*% V_Temp %*% Mx
     
-    Utility_mVc_join[i,]<-cbind(r1[i],tr(V_Final),det(solve(V_Final)))
+    pi_1<-c(exp(x_join.mVc %*% Theta))
+    Mx_1<-t(x_join.mVc) %*% (x_join.mVc * pi_1)
+    
+    Utility_mVc_join[i,]<-cbind(r1[i],tr(V_Final),det(Mx_1))
     Bias_mVc_join[i,]<-Cordeiro(XData=x_join.mVc,With_bias = beta.mVc_join[i,])    
     
     ## mMSE
@@ -405,7 +426,10 @@ AlgTwoStp <- function(r1=r1, r2=r2,Y,X,n,Real_Data,alpha,combs,All_Covariates){
     V_Temp<-t(x_Real.mMSE) %*% (x_Real.mMSE * ((as.vector(y_Real.mMSE)-pi)*pinv_Real.mMSE)^2)
     V_Final<-Mx %*% V_Temp %*% Mx
     
-    Utility_mMSE_Real[i,]<-cbind(r1[i],tr(V_Final),det(solve(V_Final)))
+    pi_1<-c(exp(x_Real.mMSE %*% Theta))
+    Mx_1<-t(x_Real.mMSE) %*% (x_Real.mMSE * pi_1)
+    
+    Utility_mMSE_Real[i,]<-cbind(r1[i],tr(V_Final),det(Mx_1))
     Bias_mMSE_Real[i,]<-Cordeiro(XData=x_Real.mMSE,With_bias = beta.mMSE_Real[i,])
     
     # Assumed Data Old probabilities
@@ -430,9 +454,17 @@ AlgTwoStp <- function(r1=r1, r2=r2,Y,X,n,Real_Data,alpha,combs,All_Covariates){
       Mx[[a]] %*% V_Temp[[a]] %*% Mx[[a]]
     }) 
     
+    pi_1<-lapply(1:length(combs),function(a){
+      c(exp(x_Assumed.mMSE[[a]] %*% Theta))
+    }) 
+    
+    Mx_1<-lapply(1:length(combs),function(a){
+      t(x_Assumed.mMSE[[a]]) %*% (x_Assumed.mMSE[[a]] * pi_1[[a]])
+    })
+    
     for (j in 1:length(combs)) 
     {
-      Utility_mMSE_Old[[j]][i,]<-cbind(r1[i],tr(V_Final[[j]]),det(solve(V_Final[[j]])))
+      Utility_mMSE_Old[[j]][i,]<-cbind(r1[i],tr(V_Final[[j]]),det(Mx_1[[j]]))
       Bias_mMSE_Old[[j]][i,]<-Cordeiro(XData=x_Assumed.mMSE[[j]],With_bias = beta.mMSE_Old[[j]][i,])    
     }
     
@@ -458,9 +490,17 @@ AlgTwoStp <- function(r1=r1, r2=r2,Y,X,n,Real_Data,alpha,combs,All_Covariates){
       Mx[[a]] %*% V_Temp[[a]] %*% Mx[[a]]
     })
     
+    pi_1<- lapply(1:length(combs),function(a){
+      c(exp(x_Assumed.mMSE[[a]] %*% Theta))
+    }) 
+    
+    Mx_1<-lapply(1:length(combs),function(a){
+      t(x_Assumed.mMSE[[a]]) %*% (x_Assumed.mMSE[[a]] * pi_1[[a]])
+    })
+    
     for(j in 1:length(combs))
     {
-      Utility_mMSE_New[[j]][i,]<-cbind(r1[i],tr(V_Final[[j]]),det(solve(V_Final[[j]])))
+      Utility_mMSE_New[[j]][i,]<-cbind(r1[i],tr(V_Final[[j]]),det(Mx_1[[j]]))
       Bias_mMSE_New[[j]][i,]<-Cordeiro(XData=x_Assumed.mMSE[[j]],With_bias = beta.mMSE_New[[j]][i,])
     }
     
@@ -470,7 +510,10 @@ AlgTwoStp <- function(r1=r1, r2=r2,Y,X,n,Real_Data,alpha,combs,All_Covariates){
     V_Temp<-t(x_join.mMSE) %*% (x_join.mMSE * ((as.vector(y_join.mMSE)-pi)*pinv_join.mMSE)^2)
     V_Final<-Mx %*% V_Temp %*% Mx
     
-    Utility_mMSE_join[i,]<-cbind(r1[i],tr(V_Final),det(solve(V_Final)))
+    pi_1<-c(exp(x_join.mMSE %*% Theta))
+    Mx_1<-t(x_join.mMSE) %*% (x_join.mMSE * pi_1)
+    
+    Utility_mMSE_join[i,]<-cbind(r1[i],tr(V_Final),det(Mx_1))
     Bias_mMSE_join[i,]<-Cordeiro(XData=x_join.mMSE,With_bias = beta.mMSE_join[i,])    
   }
   

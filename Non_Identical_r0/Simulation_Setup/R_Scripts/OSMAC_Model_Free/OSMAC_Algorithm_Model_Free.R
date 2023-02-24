@@ -13,7 +13,7 @@ Cordeiro<-function(XData,With_bias)
 }
 
 # Two Step OSMAC ----
-OSMAC_MF <- function(r1,r2,Y,X,n,alpha,combs,All_Covariates) 
+OSMAC_MF <- function(r1,r2,Y,X,n,alpha,combs,All_Covariates,Theta) 
 {
   PI.prop <- rep(1/n, n)
   idx.prop <- sample(1:n, r1, T, PI.prop)
@@ -111,6 +111,12 @@ OSMAC_MF <- function(r1,r2,Y,X,n,alpha,combs,All_Covariates)
       Utility_mVc[[j]][i,]<-cbind(r2[i],tr(V_Final),det(solve(V_Final))) #
     }
     
+    pi_1 <- c(exp(X[c(idx.mVc, idx.prop),All_Covariates %in% combs[[1]] ] %*% Theta))
+    Mx_1 <- t(X[c(idx.mVc, idx.prop),All_Covariates %in% combs[[1]] ]) %*% 
+                  (X[c(idx.mVc, idx.prop),All_Covariates %in% combs[[1]] ] * pi_1)
+    
+    Utility_mVc[[1]][i,3]<-det(Mx_1) #
+    
     ## mMSE
     idx.mMSE <- sample(1:n, r2[i]-r1, T, pjoin.mMSE)
     
@@ -143,6 +149,11 @@ OSMAC_MF <- function(r1,r2,Y,X,n,alpha,combs,All_Covariates)
       
       Utility_mMSE[[j]][i,]<-cbind(r2[i],tr(V_Final),det(solve(V_Final))) #
     }
+    
+    pi_1 <-c(exp(X[c(idx.mMSE, idx.prop),All_Covariates %in% combs[[1]] ] %*% Theta)) #
+    Mx_1 <- t(X[c(idx.mMSE, idx.prop),All_Covariates %in% combs[[1]] ]) %*% 
+                  (X[c(idx.mMSE, idx.prop),All_Covariates %in% combs[[1]] ] * pi_1) 
+    Utility_mMSE[[1]][i,3]<-det(Mx_1) #
   }
   
   #Sample_mVc<-do.call(rbind,Sample.mVc) #

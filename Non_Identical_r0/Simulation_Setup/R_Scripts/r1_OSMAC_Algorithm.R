@@ -13,7 +13,7 @@ Cordeiro<-function(XData,With_bias)
 }
 
 # Two step OSMAC ----
-AlgTwoStp <- function(r1=r1, r2=r2,Y,X,Real_Data,n,Model) {
+AlgTwoStp <- function(r1=r1, r2=r2,Y,X,Real_Data,n,Model,Theta) {
   if(Model=="Real_Model")
   {
     PI.prop <- rep(1/n, n)
@@ -64,13 +64,15 @@ AlgTwoStp <- function(r1=r1, r2=r2,Y,X,Real_Data,n,Model) {
       ru <- length(y.mVc)
       beta.mVc[i,] <- fit.mVc$coefficients
       
-      pi<- c(exp(x.mVc %*% beta.mVc[i,]))
-      Mx<-solve(t(x.mVc) %*% (x.mVc * pi * pinv.mVc))
-      V_Temp<- t(x.mVc) %*% (x.mVc * ((as.vector(y.mVc)-pi)*pinv.mVc)^2) 
-      
+      pi<- c(exp(x.mVc %*% beta.mVc[i,])); 
+      Mx<-solve(t(x.mVc) %*% (x.mVc * pi * pinv.mVc)); 
+      V_Temp<- t(x.mVc) %*% (x.mVc * ((as.vector(y.mVc)-pi)*pinv.mVc)^2); 
       V_Final<-Mx %*% V_Temp %*% Mx
       
-      Utility_mVc[i,]<-cbind(r1[i],tr(V_Final),det(solve(V_Final)))
+      pi_1<- c(exp(x.mVc %*% Theta))
+      Mx_1<-t(x.mVc) %*% (x.mVc * pi_1)
+      
+      Utility_mVc[i,]<-cbind(r1[i],tr(V_Final),det(Mx_1))
       Bias_mVc[i,]<-Cordeiro(XData=x.mVc,With_bias = beta.mVc[i,])
       
       ## mMSE
@@ -85,13 +87,15 @@ AlgTwoStp <- function(r1=r1, r2=r2,Y,X,Real_Data,n,Model) {
       ru <- length(y.mMSE)
       beta.mMSE[i,] <- fit.mMSE$coefficients
       
-      pi<-c(exp(x.mMSE %*% beta.mMSE[i,]))
+      pi<-c(exp(x.mMSE %*% beta.mMSE[i,])); 
       Mx<-solve(t(x.mMSE) %*% (x.mMSE * pi * pinv.mMSE))
       V_Temp<-t(x.mMSE) %*% (x.mMSE* ((as.vector(y.mMSE)-as.vector(pi))*as.vector(pinv.mMSE))^2) 
+      V_Final<-Mx %*% V_Temp %*% Mx;
       
-      V_Final<-Mx %*% V_Temp %*% Mx
+      pi_1<-c(exp(x.mMSE %*% Theta))
+      Mx_1<-t(x.mMSE) %*% (x.mMSE * pi_1)
       
-      Utility_mMSE[i,]<-cbind(r1[i],tr(V_Final),det(solve(V_Final)))
+      Utility_mMSE[i,]<-cbind(r1[i],tr(V_Final),det(Mx_1))
       Bias_mMSE[i,]<-Cordeiro(XData=x.mMSE,With_bias = beta.mMSE[i,])
     }
     
@@ -160,13 +164,15 @@ AlgTwoStp <- function(r1=r1, r2=r2,Y,X,Real_Data,n,Model) {
       ru <- length(y_Real.mVc)
       beta.mVc[i,] <- fit_Real.mVc$coefficients
       
-      pi<- c(exp(x_Real.mVc %*% beta.mVc[i,]))
+      pi<- c(exp(x_Real.mVc %*% beta.mVc[i,])); 
       Mx<-solve(t(x_Real.mVc) %*% (x_Real.mVc * pi * pinv_Real.mVc))
       V_Temp<-t(x_Real.mVc)%*%(x_Real.mVc * ((as.vector(y_Real.mVc)-pi)*pinv_Real.mVc)^2)
+      V_Final<-Mx %*% V_Temp %*% Mx; 
       
-      V_Final<-Mx %*% V_Temp %*% Mx
+      pi_1<- c(exp(x_Real.mVc %*% Theta))
+      Mx_1<-t(x_Real.mVc) %*% (x_Real.mVc * pi_1)
       
-      Utility_mVc[i,]<-cbind(r1[i],tr(V_Final),det(solve(V_Final)))
+      Utility_mVc[i,]<-cbind(r1[i],tr(V_Final),det(Mx_1))
       Bias_mVc[i,]<-Cordeiro(XData=x_Real.mVc,With_bias = beta.mVc[i,])
       
       ## mMSE
@@ -181,13 +187,15 @@ AlgTwoStp <- function(r1=r1, r2=r2,Y,X,Real_Data,n,Model) {
       ru <- length(y_Real.mMSE)
       beta.mMSE[i,] <- fit_Real.mMSE$coefficients
       
-      pi<-c(exp(x_Real.mMSE %*% beta.mMSE[i,]))
+      pi<-c(exp(x_Real.mMSE %*% beta.mMSE[i,])); 
       Mx<-solve(t(x_Real.mMSE) %*% (x_Real.mMSE * pi*pinv_Real.mMSE))
       V_Temp<-t(x_Real.mMSE)%*%(x_Real.mMSE * ((as.vector(y_Real.mMSE)-pi)*pinv_Real.mMSE)^2)
+      V_Final<-Mx %*% V_Temp %*% Mx;
       
-      V_Final<-Mx %*% V_Temp %*% Mx
+      pi_1<-c(exp(x_Real.mMSE %*% Theta))
+      Mx_1<-t(x_Real.mMSE) %*% (x_Real.mMSE * pi_1)
       
-      Utility_mMSE[i,]<-cbind(r1[i],tr(V_Final),det(solve(V_Final)))
+      Utility_mMSE[i,]<-cbind(r1[i],tr(V_Final),det(Mx_1))
       Bias_mMSE[i,]<-Cordeiro(XData=x_Real.mMSE,With_bias = beta.mMSE[i,])
     }
     

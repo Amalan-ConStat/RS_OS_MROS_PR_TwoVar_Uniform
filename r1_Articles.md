@@ -1,7 +1,7 @@
 Articles_Plots
 ================
 Amalan
-February 16, 2023
+February 23, 2023
 
 # Using Uniform Distribution for Data
 

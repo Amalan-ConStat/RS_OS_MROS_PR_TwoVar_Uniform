@@ -13,7 +13,7 @@ Cordeiro<-function(XData,With_bias)
 }
 
 # Two step OSMAC ----
-AlgTwoStp <- function(r1=r1, r2=r2,Y,X,Real_Data,n,Model) {
+AlgTwoStp <- function(r1=r1, r2=r2,Y,X,Real_Data,n,Model,Theta) {
   if(Model=="Real_Model")
   {
     PI.prop <- rep(1/n, n)
@@ -69,7 +69,10 @@ AlgTwoStp <- function(r1=r1, r2=r2,Y,X,Real_Data,n,Model) {
       
       V_Final<-Mx %*% V_Temp %*% Mx
       
-      Utility_mVc[i,]<-cbind(r2[i],tr(V_Final),det(solve(V_Final)))
+      pi_1<- c(exp(x.mVc %*% Theta))
+      Mx_1<-t(x.mVc) %*% (x.mVc * pi_1)
+      
+      Utility_mVc[i,]<-cbind(r2[i],tr(V_Final),det(Mx_1))
       Bias_mVc[i,]<-Cordeiro(XData=x.mVc,With_bias = beta.mVc[i,])
       
       ## mMSE
@@ -90,7 +93,10 @@ AlgTwoStp <- function(r1=r1, r2=r2,Y,X,Real_Data,n,Model) {
       
       V_Final<-Mx %*% V_Temp %*% Mx
       
-      Utility_mMSE[i,]<-cbind(r2[i],tr(V_Final),det(solve(V_Final)))
+      pi_1<-c(exp(x.mMSE %*% Theta))
+      Mx_1<-t(x.mMSE) %*% (x.mMSE * pi_1)
+      
+      Utility_mMSE[i,]<-cbind(r2[i],tr(V_Final),det(Mx_1))
       Bias_mMSE[i,]<-Cordeiro(XData=x.mMSE,With_bias = beta.mMSE[i,])
     }
     
@@ -165,7 +171,10 @@ AlgTwoStp <- function(r1=r1, r2=r2,Y,X,Real_Data,n,Model) {
       
       V_Final<-Mx %*% V_Temp %*% Mx
       
-      Utility_mVc[i,]<-cbind(r2[i],tr(V_Final),det(solve(V_Final)))
+      pi_1<- c(exp(x_Real.mVc %*% Theta))
+      Mx_1<-t(x_Real.mVc) %*% (x_Real.mVc * pi_1)
+      
+      Utility_mVc[i,]<-cbind(r2[i],tr(V_Final),det(Mx_1))
       Bias_mVc[i,]<-Cordeiro(XData=x_Real.mVc,With_bias = beta.mVc[i,])
       
       ## mMSE
@@ -186,7 +195,10 @@ AlgTwoStp <- function(r1=r1, r2=r2,Y,X,Real_Data,n,Model) {
       
       V_Final<-Mx %*% V_Temp %*% Mx
       
-      Utility_mMSE[i,]<-cbind(r2[i],tr(V_Final),det(solve(V_Final)))
+      pi_1<-c(exp(x_Real.mMSE %*% Theta))
+      Mx_1<-t(x_Real.mMSE) %*% (x_Real.mMSE * pi_1)
+      
+      Utility_mMSE[i,]<-cbind(r2[i],tr(V_Final),det(Mx_1))
       Bias_mMSE[i,]<-Cordeiro(XData=x_Real.mMSE,With_bias = beta.mMSE[i,])
     }
     

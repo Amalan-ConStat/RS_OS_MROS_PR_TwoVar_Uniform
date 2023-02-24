@@ -20,6 +20,7 @@ library(gganimate)
 library(viridis)
 library(compiler)
 library(data.table)
+library(ggpubr)
 
 # Cordeiro Bias Estimation ----
 Cordeiro<-function(XData,With_bias)
