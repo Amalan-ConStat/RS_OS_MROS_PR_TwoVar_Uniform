@@ -165,4 +165,4 @@ Each model related covariate data is separately used on each subsampling method 
 
 * Use **Publication_Ready_command.R** to run **Publication.Rmd** on every model and its respective big data.
 
-* Use **Articles.Rmd** to generate plots relevant to the paper as pdf files **SMSE_MI_PR_TV_Uni_mMSE.pdf** and **SMSE_MI_PR_TV_Uni_mVc.pdf**. 
+* Use **Articles.Rmd** to generate plots relevant to the paper as pdf files **Article_Plots/SMSE_MI_PR_TV_Uni_mMSE.pdf** and **Article_Plots/SMSE_MI_PR_TV_Uni_mVc.pdf**. 
