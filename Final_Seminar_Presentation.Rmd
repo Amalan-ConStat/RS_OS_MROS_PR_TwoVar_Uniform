@@ -1,5 +1,5 @@
 ---
-title: "Articles_Plots"
+title: "Final Seminar Presentation"
 author: "Amalan"
 date: '`r format(Sys.Date(), "%B %d, %Y")`'
 output: github_document
@@ -395,10 +395,10 @@ Identical_ro$Covariate<-factor(Identical_ro$Covariate,
                                           "Data Model: x\u2081, x\u2082, (x\u2081)\u00B2",
                                           "Data Model: x\u2081, x\u2082, (x\u2082)\u00B2",
                                           "Data Model: x\u2081, x\u2082, (x\u2081)\u00B2, (x\u2082)\u00B2"),
-                               labels = c(expression("Data Model: "*X[1]*", "*X[2]),
-                                          expression("Data Model: "*X[1]*", "*X[2]*", "*X[1]^{2}),
-                                          expression("Data Model: "*X[1]*", "*X[2]*", "*X[2]^{2}),
-                                          expression("Data Model: "*X[1]*", "*X[2]*", "*X[1]^{2}*", "*X[2]^{2})))
+                               labels = c(expression("Data Generating Model: "*X[1]*", "*X[2]),
+                                          expression("Data Generating Model: "*X[1]*", "*X[2]*", "*X[1]^{2}),
+                                          expression("Data Generating Model: "*X[1]*", "*X[2]*", "*X[2]^{2}),
+                                          expression("Data Generating Model: "*X[1]*", "*X[2]*", "*X[1]^{2}*", "*X[2]^{2})))
 
 Identical_ro$Model<-factor(Identical_ro$Model,
                            levels = c("RS DM","RS AM 1","RS AM 2","RS AM 3","RS CM",
@@ -412,16 +412,16 @@ Identical_ro$Model<-recode_factor(Identical_ro$Model,
                                   `RS AM 2`="Random Sampling: Incorrect Model 2",
                                   `RS AM 3`="Random Sampling: Incorrect Model 3",
                                   `RS CM` = "Random Sampling: Complex Model",
-                                  `mMSE DM`="Optimal subsampling mMSE: Data Model",
-                                  `mMSE AM 1`="Optimal subsampling mMSE: Incorrect Model 1",
-                                  `mMSE AM 2`="Optimal subsampling mMSE: Incorrect Model 2",
-                                  `mMSE AM 3`="Optimal subsampling mMSE: Incorrect Model 3",
-                                  `mMSE CM` = "Optimal subsampling mMSE: Complex Model",
-                                  `mVc DM`="Optimal subsampling mVc: Data Model",
-                                  `mVc AM 1`="Optimal subsampling mVc: Incorrect Model 1",
-                                  `mVc AM 2`="Optimal subsampling mVc: Incorrect Model 2",
-                                  `mVc AM 3`="Optimal subsampling mVc: Incorrect Model 3",
-                                  `mVc CM`="Optimal subsampling mVc: Complex Model",
+                                  `mMSE DM`="Model-based subsampling mMSE: Data Model",
+                                  `mMSE AM 1`="Model-based subsampling mMSE: Incorrect Model 1",
+                                  `mMSE AM 2`="Model-based subsampling mMSE: Incorrect Model 2",
+                                  `mMSE AM 3`="Model-based subsampling mMSE: Incorrect Model 3",
+                                  `mMSE CM` = "Model-based subsampling mMSE: Complex Model",
+                                  `mVc DM`="Model-based subsampling mVc: Data Model",
+                                  `mVc AM 1`="Model-based subsampling mVc: Incorrect Model 1",
+                                  `mVc AM 2`="Model-based subsampling mVc: Incorrect Model 2",
+                                  `mVc AM 3`="Model-based subsampling mVc: Incorrect Model 3",
+                                  `mVc CM`="Model-based subsampling mVc: Complex Model",
                                   `mMSE MR`="Model Robust subsampling mMSE: Data Model",
                                   `mVc MR`="Model Robust subsampling mVc: Data Model")
 
@@ -429,11 +429,11 @@ Selected_Models_mMSE<-c("Random Sampling: Data Model",
                         #"Random Sampling: Incorrect Model 1",
                         #"Random Sampling: Incorrect Model 2",
                         #"Random Sampling: Incorrect Model 3",
-                        "Optimal subsampling mMSE: Data Model",
-                        "Optimal subsampling mMSE: Incorrect Model 1",
-                        "Optimal subsampling mMSE: Incorrect Model 2",
-                        "Optimal subsampling mMSE: Incorrect Model 3",
-                        "Optimal subsampling mMSE: Complex Model",
+                        "Model-based subsampling mMSE: Data Model",
+                        "Model-based subsampling mMSE: Incorrect Model 1",
+                        "Model-based subsampling mMSE: Incorrect Model 2",
+                        "Model-based subsampling mMSE: Incorrect Model 3",
+                        "Model-based subsampling mMSE: Complex Model",
                         "Model Robust subsampling mMSE: Data Model")
 
 # Colors_mMSE<-c("#88CCEE", #"#A6C3D3","#5D92B0","#35586C", 
@@ -455,246 +455,14 @@ ShapeType_mMSE<-c(16,
                   4,4,4,3,
                   8)
 
-Selected_Models_mVc<-c("Random Sampling: Data Model",
-                       #"Random Sampling: Incorrect Model 1",
-                       #"Random Sampling: Incorrect Model 2",
-                       #"Random Sampling: Incorrect Model 3",
-                       "Optimal subsampling mVc: Data Model",
-                       "Optimal subsampling mVc: Incorrect Model 1",
-                       "Optimal subsampling mVc: Incorrect Model 2",
-                       "Optimal subsampling mVc: Incorrect Model 3",
-                       "Optimal subsampling mVc: Complex Model",
-                       "Model Robust subsampling mVc: Data Model")
-
-# Colors_mVc<-Colors_mVc<-c("#88CCEE",#"#A6C3D3","#5D92B0","#35586C", 
-#                           "#FFC4D8","#E28490","#BB2C3E","#55141C", 
-#                           "#DDCC77")
-
-Colors_mVc<-c("black",#"grey","grey","grey",
-              "#cc0000", 
-              "#ff578a","#ff578a","#ff578a","#603BDE",
-              "darkgreen")
-
-LineType_mVc<-c("twodash", 
-                "dashed",
-                "dotted","dotted","dotted","dotdash",
-                "solid")
-
-ShapeType_mVc<-c(16,
-                 1,
-                 4,4,4,3,
-                 8)
-
 Theme_special<-function()
 {
   theme(legend.key.width=unit(1,"cm"),
-        axis.text.x = element_text(color = "black",size=12, angle = 45, hjust=0.75), #, vjust = 0.5
-        axis.text.y = element_text(color = "black",size=12), #, vjust = 0.5, hjust=1
-        strip.text = element_text(colour = "black",size = 12,face="bold"),
+        axis.text.x = element_text(color = "black",size=14, angle = 45, hjust=0.75), #, vjust = 0.5
+        axis.text.y = element_text(color = "black",size=14), #, vjust = 0.5, hjust=1
+        strip.text = element_text(colour = "black",size = 16,face="bold"),
         panel.grid.minor.x = element_blank(),
-        axis.title= element_text(color = "black",face = "bold",size = 12),
-        legend.text = element_text(color = "black", size=11),
-        legend.position = "bottom",
-        legend.margin=margin(0,0,0,0),
-        legend.box.margin=margin(-1,-2,-1,-2)) 
-}
-
-#Identical_ro<-Identical_ro[Identical_ro$Subsample_Size %in% seq(100,1000,100),]
-
-Identical_ro[Identical_ro$Metric=="Model Information" & Identical_ro$Model %in% Selected_Models_mMSE,] %>%
-  ggplot(.,aes(x=Subsample_Size,y=`Estimated Values`,color=Model,linetype=Model,shape=Model))+
-  scale_x_continuous(labels = unique(Identical_ro$Subsample_Size),
-                     breaks = unique(Identical_ro$Subsample_Size))+
-  geom_point(size=1.25)+geom_line(size=0.75)+
-  scale_color_manual(values=Colors_mMSE)+
-  scale_linetype_manual(values=LineType_mMSE)+
-  scale_shape_manual(values = ShapeType_mMSE)+
-  facet_wrap(~Covariate,scales = "free_y",ncol = 4,labeller = label_parsed)+
-  xlab("r")+
-  ylab("Average Model Information")+expand_limits(y = 0)+
-  scale_y_continuous(breaks = scales::pretty_breaks(n = length(unique(Identical_ro$Subsample_Size))/2))+
-  theme_bw()+guides(colour = guide_legend(nrow = 3))+Theme_special()->Temp_plot_mMSE
-
-Temp_legend_mMSE<-get_legend(Temp_plot_mMSE)
-
-Identical_ro[Identical_ro$Metric=="Model Information" & Identical_ro$Model %in% Selected_Models_mVc,] %>%
-  ggplot(.,aes(x=Subsample_Size,y=`Estimated Values`,color=Model,linetype=Model,shape=Model))+
-  scale_x_continuous(labels = unique(Identical_ro$Subsample_Size),
-                     breaks = unique(Identical_ro$Subsample_Size))+
-  geom_point(size=1.25)+geom_line(size=0.75)+
-  scale_color_manual(values=Colors_mVc)+
-  scale_linetype_manual(values=LineType_mVc)+
-  scale_shape_manual(values = ShapeType_mVc)+
-  facet_wrap(~Covariate,scales = "free_y",ncol = 4,labeller = label_parsed)+
-  xlab("r")+
-  ylab("Average Model Information")+expand_limits(y = 0)+
-  scale_y_continuous(breaks = scales::pretty_breaks(n = length(unique(Identical_ro$Subsample_Size))/2))+
-  theme_bw()+guides(colour = guide_legend(nrow = 3))+Theme_special()->Temp_plot_mVc
-
-Temp_legend_mVc<-get_legend(Temp_plot_mVc)
-
-Identical_ro[Identical_ro$Metric=="Model Information" & Identical_ro$Model %in% Selected_Models_mMSE,] %>%
-  ggplot(.,aes(x=Subsample_Size,y=log(`Estimated Values`),color=Model,linetype=Model,shape=Model))+
-  scale_x_continuous(labels = unique(Identical_ro$Subsample_Size),
-                     breaks = unique(Identical_ro$Subsample_Size))+
-  geom_point(size=1.25)+geom_line(size=0.75)+
-  scale_color_manual(values=Colors_mMSE)+
-  scale_linetype_manual(values=LineType_mMSE)+
-  scale_shape_manual(values = ShapeType_mMSE)+
-  facet_wrap(~Covariate,scales = "free_y",ncol = 2,labeller = label_parsed)+
-  xlab("r")+
-  ylab("log(Average Model Information)")+#expand_limits(y = 0)+
-  scale_y_continuous(breaks = scales::pretty_breaks(n = length(unique(Identical_ro$Subsample_Size))/2))+
-  theme_bw()+Theme_special()->p1
-
-Identical_ro[Identical_ro$Metric=="Model Information" & Identical_ro$Model %in% Selected_Models_mVc,] %>%
-  ggplot(.,aes(x=Subsample_Size,y=log(`Estimated Values`),color=Model,linetype=Model,shape=Model))+
-  scale_x_continuous(labels = unique(Identical_ro$Subsample_Size),
-                     breaks = unique(Identical_ro$Subsample_Size))+
-  geom_point(size=1.25)+geom_line(size=0.75)+
-  scale_color_manual(values=Colors_mVc)+
-  scale_linetype_manual(values=LineType_mVc)+
-  scale_shape_manual(values = ShapeType_mVc)+
-  facet_wrap(~Covariate,scales = "free_y",ncol = 2, labeller = label_parsed)+
-  xlab("r")+
-  ylab("log(Average Model Information)")+#expand_limits(y = 0)+
-  scale_y_continuous(breaks = scales::pretty_breaks(n = length(unique(Identical_ro$Subsample_Size))/2))+
-  theme_bw()+Theme_special()->p2
-  
-Identical_ro[Identical_ro$Metric=="MSE" & Identical_ro$Model %in% Selected_Models_mMSE,] %>%
-  ggplot(.,aes(x=Subsample_Size,y=log(`Estimated Values`),color=Model,linetype=Model,shape=Model))+
-  scale_x_continuous(labels = unique(Identical_ro$Subsample_Size),
-                     breaks = unique(Identical_ro$Subsample_Size))+
-  geom_point(size=1.25)+geom_line(size=0.75)+
-  scale_color_manual(values=Colors_mMSE)+
-  scale_linetype_manual(values=LineType_mMSE)+
-  scale_shape_manual(values = ShapeType_mMSE)+
-  facet_wrap(~Covariate,scales = "free_y",ncol = 2, labeller = label_parsed)+
-  xlab("r")+
-  ylab("log(SMSE)")+#expand_limits(y = 0)+
-  scale_y_continuous(breaks = scales::pretty_breaks(n = length(unique(Identical_ro$Subsample_Size))/2))+
-  theme_bw()+Theme_special()->p3
-
-
-Identical_ro[Identical_ro$Metric=="MSE" & Identical_ro$Model %in% Selected_Models_mVc,] %>%
-  ggplot(.,aes(x=Subsample_Size,y=log(`Estimated Values`),color=Model,linetype=Model,shape=Model))+
-  scale_x_continuous(labels = unique(Identical_ro$Subsample_Size),
-                     breaks = unique(Identical_ro$Subsample_Size))+
-  geom_point(size=1.25)+geom_line(size=0.75)+
-  scale_color_manual(values=Colors_mVc)+
-  scale_linetype_manual(values=LineType_mVc)+
-  scale_shape_manual(values = ShapeType_mVc)+
-  facet_wrap(~Covariate,scales = "free_y",ncol = 2, labeller = label_parsed)+
-  xlab("r")+
-  ylab("log(SMSE)")+#expand_limits(y = 0)+
-  scale_y_continuous(breaks = scales::pretty_breaks(n = length(unique(Identical_ro$Subsample_Size))/2))+
-  theme_bw()+Theme_special()->p4
-
-Identical_ro[Identical_ro$Metric=="Average MSE Y" & Identical_ro$Model %in% Selected_Models_mMSE,] %>%
-  ggplot(.,aes(x=Subsample_Size,y=log(`Estimated Values`),color=Model,linetype=Model,shape=Model))+
-  scale_x_continuous(labels = unique(Identical_ro$Subsample_Size),
-                     breaks = unique(Identical_ro$Subsample_Size))+
-  geom_point(size=1.25)+geom_line(size=0.75)+
-  scale_color_manual(values=Colors_mMSE)+
-  scale_linetype_manual(values=LineType_mMSE)+
-  scale_shape_manual(values = ShapeType_mMSE)+
-  facet_wrap(~Covariate,scales = "free_y",ncol = 2, labeller = label_parsed)+
-  xlab("r")+
-  ylab("log(Average MSE of Y)")+#expand_limits(y = 0)+
-  scale_y_continuous(breaks = scales::pretty_breaks(n = length(unique(Identical_ro$Subsample_Size))/2))+
-  theme_bw()+Theme_special()->p5
-
-
-Identical_ro[Identical_ro$Metric=="Average MSE Y" & Identical_ro$Model %in% Selected_Models_mVc,] %>%
-  ggplot(.,aes(x=Subsample_Size,y=log(`Estimated Values`),color=Model,linetype=Model,shape=Model))+
-  scale_x_continuous(labels = unique(Identical_ro$Subsample_Size),
-                     breaks = unique(Identical_ro$Subsample_Size))+
-  geom_point(size=1.25)+geom_line(size=0.75)+
-  scale_color_manual(values=Colors_mVc)+
-  scale_linetype_manual(values=LineType_mVc)+
-  scale_shape_manual(values = ShapeType_mVc)+
-  facet_wrap(~Covariate,scales = "free_y",ncol = 2, labeller = label_parsed)+
-  xlab("r")+
-  ylab("log(Average MSE of Y)")+#expand_limits(y = 0)+
-  scale_y_continuous(breaks = scales::pretty_breaks(n = length(unique(Identical_ro$Subsample_Size))/2))+
-  theme_bw()+Theme_special()->p6
-
-Identical_ro[Identical_ro$Metric=="MSE for MLE" & Identical_ro$Model %in% Selected_Models_mMSE,] %>%
-  ggplot(.,aes(x=Subsample_Size,y=log(`Estimated Values`),color=Model,linetype=Model,shape=Model))+
-  scale_x_continuous(labels = unique(Identical_ro$Subsample_Size),
-                     breaks = unique(Identical_ro$Subsample_Size))+
-  geom_point(size=1.25)+geom_line(size=0.75)+
-  scale_color_manual(values=Colors_mMSE)+
-  scale_linetype_manual(values=LineType_mMSE)+
-  scale_shape_manual(values = ShapeType_mMSE)+
-  facet_wrap(~Covariate,scales = "free_y",ncol = 2, labeller = label_parsed)+
-  xlab("r")+
-  ylab("log(SMSE)")+#expand_limits(y = 0)+
-  scale_y_continuous(breaks = scales::pretty_breaks(n = length(unique(Identical_ro$Subsample_Size))/2))+
-  theme_bw()+Theme_special()->p7
-
-
-Identical_ro[Identical_ro$Metric=="MSE for MLE" & Identical_ro$Model %in% Selected_Models_mVc,] %>%
-  ggplot(.,aes(x=Subsample_Size,y=log(`Estimated Values`),color=Model,linetype=Model,shape=Model))+
-  scale_x_continuous(labels = unique(Identical_ro$Subsample_Size),
-                     breaks = unique(Identical_ro$Subsample_Size))+
-  geom_point(size=1.25)+geom_line(size=0.75)+
-  scale_color_manual(values=Colors_mVc)+
-  scale_linetype_manual(values=LineType_mVc)+
-  scale_shape_manual(values = ShapeType_mVc)+
-  facet_wrap(~Covariate,scales = "free_y",ncol = 2, labeller = label_parsed)+
-  xlab("r")+
-  ylab("log(SMSE)")+#expand_limits(y = 0)+
-  scale_y_continuous(breaks = scales::pretty_breaks(n = length(unique(Identical_ro$Subsample_Size))/2))+
-  theme_bw()+Theme_special()->p8
-
-ggarrange(p1,p3,nrow = 2,ncol = 1,legend.grob = Temp_legend_mMSE,legend = "bottom",labels = "auto")
-ggarrange(p2,p4,nrow = 2,ncol = 1,legend.grob = Temp_legend_mVc,legend = "bottom",labels = "auto")
-ggarrange(p5,nrow = 1,ncol = 1,legend.grob = Temp_legend_mMSE,legend = "bottom")
-ggarrange(p6,nrow = 1,ncol = 1,legend.grob = Temp_legend_mVc,legend = "bottom")
-ggarrange(p7,nrow = 1,ncol = 1,legend.grob = Temp_legend_mMSE,legend = "bottom")
-ggarrange(p8,nrow = 1,ncol = 1,legend.grob = Temp_legend_mVc,legend = "bottom")
-
-# ggarrange(p1,p3,nrow = 2,ncol = 1,legend.grob = Temp_legend_mMSE,legend = "bottom",labels = "auto") %>%
-#   ggexport(filename = here("Article_Plots","SMSE_MI_PR_TV_Uni_mMSE.pdf"),res=300,width = 12,height = 16)
-# # ggarrange(p2,p4,nrow = 2,ncol = 1,legend.grob = Temp_legend_mVc,legend = "bottom",labels = "auto") %>%
-# #   ggexport(filename = here("Article_Plots","SMSE_MI_PR_TV_Uni_mVc.pdf"),res=300,width = 12,height = 16)
-# ggarrange(p4,nrow = 1,ncol = 1,legend.grob = Temp_legend_mVc,legend = "bottom") %>%
-#   ggexport(filename = here("Article_Plots","SMSE_MI_PR_TV_Uni_mVc.pdf"),res=300,width = 12,height = 12)
-# ggarrange(p5,nrow = 1,ncol = 1,legend.grob = Temp_legend_mMSE,legend = "bottom") %>%
-#   ggexport(filename = here("Article_Plots","ACCURACY_PR_TV_Uni_mMSE.pdf"),res=300,width = 12,height = 12)
-# ggarrange(p6,nrow = 1,ncol = 1,legend.grob = Temp_legend_mVc,legend = "bottom") %>%
-#   ggexport(filename = here("Article_Plots","ACCURACY_PR_TV_Uni_mVc.pdf"),res=300,width = 12,height = 12)
-# 
-# ggarrange(p7,nrow = 1,ncol = 1,legend.grob = Temp_legend_mMSE,legend = "bottom") %>%
-#   ggexport(filename = here("Article_Plots","SMSE_for_MLE_MI_PR_TV_Uni_mMSE.pdf"),res=300,width = 12,height = 12)
-# ggarrange(p8,nrow = 1,ncol = 1,legend.grob = Temp_legend_mVc,legend = "bottom") %>%
-#   ggexport(filename = here("Article_Plots","SMSE_for_MLE_MI_PR_TV_Uni_mVc.pdf"),res=300,width = 12,height = 12)
-# 
-# ggarrange(p1,p3,nrow = 2,ncol = 1,legend.grob = Temp_legend_mMSE,legend = "bottom",labels = "auto") %>%
-#   ggsave(filename = here("Article_Plots","SMSE_MI_PR_TV_Uni_mMSE.eps"),device="eps",dpi=300,width = 12,height = 16)
-# ggarrange(p2,p4,nrow = 2,ncol = 1,legend.grob = Temp_legend_mVc,legend = "bottom",labels = "auto") %>% 
-#   ggsave(filename = here("Article_Plots","SMSE_MI_PR_TV_Uni_mVc.eps"),device="eps",dpi=300,width = 12,height = 16)
-# ggarrange(p5,nrow = 1,ncol = 1,legend.grob = Temp_legend_mMSE,legend = "bottom") %>%
-#   ggsave(filename = here("Article_Plots","ACCURACY_PR_TV_Uni_mMSE.eps"),device="eps",dpi=300,width = 12,height = 12)
-# ggarrange(p6,nrow = 1,ncol = 1,legend.grob = Temp_legend_mVc,legend = "bottom") %>%
-#   ggsave(filename = here("Article_Plots","ACCURACY_PR_TV_Uni_mVc.eps"),device="eps",dpi=300,width = 12,height = 12)
-# 
-# ggarrange(p7,nrow = 1,ncol = 1,legend.grob = Temp_legend_mMSE,legend = "bottom") %>%
-#   ggexport(filename = here("Article_Plots","SMSE_for_MLE_MI_PR_TV_Uni_mMSE.eps"),res=300,width = 12,height = 12)
-# ggarrange(p8,nrow = 1,ncol = 1,legend.grob = Temp_legend_mVc,legend = "bottom") %>%
-#   ggexport(filename = here("Article_Plots","SMSE_for_MLE_MI_PR_TV_Uni_mVc.eps"),res=300,width = 12,height = 12)
-```
-
-```{r Final seminar presentation}
-Theme_special<-function()
-{
-  theme(legend.key.width=unit(1,"cm"),
-        axis.text.x = element_text(color = "black",size=12, angle = 45, hjust=0.75), #, vjust = 0.5
-        axis.text.y = element_text(color = "black",size=12), #, vjust = 0.5, hjust=1
-        strip.text = element_text(colour = "black",size = 12,face="bold"),
-        panel.grid.minor.x = element_blank(),
-        axis.title= element_text(color = "black",face = "bold",size = 12),
+        axis.title= element_text(color = "black",face = "bold",size = 16),
         legend.text = element_text(color = "black", size=13),
         legend.position = "bottom",
         legend.margin=margin(0,0,0,0),
@@ -732,7 +500,5 @@ Identical_ro[Identical_ro$Metric=="MSE" & Identical_ro$Model %in% Selected_Model
   theme_bw()+Theme_special()->Final_Seminar
 
 ggarrange(Final_Seminar,nrow = 1,ncol = 1,legend.grob = Temp_legend_mMSE,legend = "bottom") %>%
-  ggsave(filename = here("Article_Plots","Model_Robust_Results_1.png"),dpi=300,width = 14,height = 16)
-
+  ggsave(filename = here("Article_Plots","Model_Robust_Results_1.png"),dpi=300,width = 16,height = 14)
 ```
-
